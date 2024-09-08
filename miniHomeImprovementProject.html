@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Home Remodel Competition</title>
+
+</head>
+<body>
+    <h1>Mini Home Remodel Competition</h1>
+    <div class="cost-section">
+        <p class="paint">Paint: $0.00</p>
+        <p class="floor">Floor Coverings: $0.00</p>
+        <p class="furniture">Furniture: $0.00</p>
+        <p class="totalCost">Total: $0.00</p>
+    </div>
+    <button onclick="startCompetition()">Start Remodeling</button>
+
+    <script>
+        let totalCost = 0;
+
+        //Declaring function
+        function addPaintAndSupplies(totalCost, callback) {
+            let cost = parseFloat(prompt("Enter the cost for the paint and supplies:"));
+
+            if (cost > 100) {
+                cost *= 1.1; // Applying discount
+            }
+
+            //Updating the values
+            let paintArea = document.querySelector(".paint");
+            paintArea.innerHTML = `Paint: $${cost.toFixed(2)}`;
+
+            //Using callback to update the total
+            callback(totalCost + cost);
+            return totalCost + cost;
+        }
+
+        //Calculating floor covering cost with a function expression
+        const addFloorCoverings = function(totalCost, callback) {
+            let cost = parseFloat(prompt("Enter the cost for the floor coverings:"));
+
+            if (cost < 500) {
+                cost *= 0.85; // Applying discount
+            }
+
+            //Updating the values
+            let floorArea = document.querySelector(".floor");
+            floorArea.innerHTML = `Floor Coverings: $${cost.toFixed(2)}`;
+
+            //Using callback to update the total
+            callback(totalCost + cost);
+            return totalCost + cost;
+        };
+
+        //Arrow function to calculate furniture cost
+        const addFurniture = (totalCost, callback) => {
+            let cost = parseFloat(prompt("Enter the cost for the furniture:"));
+
+            if (cost < 500) {
+                cost *= 0.90; // Applying discount
+            }
+
+            //Updating the values
+            let furnitureArea = document.querySelector(".furniture");
+            furnitureArea.innerHTML = `Furniture: $${cost.toFixed(2)}`;
+
+            //Using callback to update the total
+            callback(totalCost + cost);
+            return totalCost + cost;
+        };
+
+        //Callback function to update total cost
+        const updateTotals = (cost) => {
+            let totalsArea = document.querySelector(".totalCost");
+            totalsArea.innerHTML = `Total: $${cost.toFixed(2)}`;
+        };
+
+        //Start the competition and get all the costs
+        function startCompetition() {
+            totalCost = 0; //Reset total cost
+
+            //Calculate each cost
+            totalCost = addPaintAndSupplies(totalCost, updateTotals);
+            totalCost = addFloorCoverings(totalCost, updateTotals);
+            totalCost = addFurniture(totalCost, updateTotals);
+        }
+    </script>
+</body>
+</html>
